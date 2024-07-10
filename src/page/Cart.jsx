@@ -57,6 +57,13 @@ const Cart = () => {
           </button>
         </div>
       )}
+      {isCart.length > 0 && (
+        <button className=" left-[40%] absolute mt-5 ">
+          <button className="border border-green-300 p-2 bg-green-300  ">
+            proceed to checkout
+          </button>
+        </button>
+      )}
     </div>
   );
 };
