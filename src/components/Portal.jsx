@@ -18,22 +18,22 @@ const Portal = () => {
             <input
               type="text"
               placeholder="name"
-              className="border-2 w-full p-1"
+              className="border border-green-300 outline-none  w-full p-1"
             />
             <input
               type="text"
               placeholder="mobile"
-              className="border-2 w-full p-1"
+              className="border border-green-300 outline-none w-full p-1 "
             />
             <input
               type="text"
               placeholder="pin"
-              className="border-2 w-full p-1"
+              className="border border-green-300 outline-none  w-full p-1"
             />
             <input
               type="text"
               placeholder="address"
-              className="border-2 w-full p-1"
+              className="border border-green-300 outline-none  w-full p-1"
             />
           </div>
           <div className="flex justify-center">

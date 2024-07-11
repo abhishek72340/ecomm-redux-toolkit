@@ -5,7 +5,6 @@ const ProductDetails = () => {
   const { data } = useSelector((state) => state.fetchProduct);
   const getSingleProduct =
     data && data.filter((item) => item.id === Number(id));
-  console.log(getSingleProduct);
   return (
     <div className="flex justify-center items-center m-5">
       {getSingleProduct &&

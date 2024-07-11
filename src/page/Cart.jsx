@@ -1,17 +1,29 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { removeFromCart } from "../redux/slices/FetchProduct";
+import {
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+} from "../redux/slices/FetchProduct";
 import { MdDelete } from "react-icons/md";
 import toast from "react-hot-toast";
 import Portal from "../components/Portal";
 const Cart = () => {
-  const { isCart } = useSelector((state) => state.fetchProduct);
+  const { isCart, quantity } = useSelector((state) => state.fetchProduct);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const deleteItemHandler = (id) => {
     dispatch(removeFromCart(id));
     toast.success("Item removed from cart successfully");
+  };
+
+  const increaseQuantityHandler = (id) => {
+    dispatch(increaseQuantity(id));
+  };
+
+  const decreaseQuantityHandler = (id) => {
+    dispatch(decreaseQuantity(id));
   };
   return (
     <div className="p-4">
@@ -32,15 +44,35 @@ const Cart = () => {
                 alt="img"
                 className="w-16 h-16 object-cover rounded-md mr-4"
               />
-              <div className="flex-1">
+              <div className="flex-1 p-2">
                 <div className="text-sm font-semibold">{item?.title}</div>
-                <div className="text-gray-600">₹{item?.price}</div>
+                <div className="text-gray-600">
+                  ₹{Math.ceil(item?.price * quantity[item.id])}
+                </div>
                 <div className="text-gray-700 text-xs w-1/2">
                   {item?.description}
                 </div>
               </div>
-              <div onClick={() => deleteItemHandler(item?.id)}>
-                <MdDelete cursor="pointer" />
+              <div className="flex gap-40 items-center">
+                <div className="flex gap-4">
+                  Quantity:
+                  <button
+                    className=" bg-green-300 px-2 font-bold"
+                    onClick={() => increaseQuantityHandler(item?.id)}
+                  >
+                    +
+                  </button>
+                  <p>{quantity[item.id]}</p>
+                  <button
+                    className=" bg-green-300 px-2 font-bold"
+                    onClick={() => decreaseQuantityHandler(item?.id)}
+                  >
+                    -
+                  </button>
+                </div>
+                <div onClick={() => deleteItemHandler(item?.id)}>
+                  <MdDelete cursor="pointer" />
+                </div>
               </div>
             </div>
           ))}

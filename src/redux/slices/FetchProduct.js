@@ -6,6 +6,7 @@ const initialState = {
   loading: false,
   isCart: [],
   input: "",
+  quantity: {},
 };
 
 export const fetchProduct = createAsyncThunk("fetchProduct", async () => {
@@ -25,13 +26,30 @@ const fetchProductSlice = createSlice({
       const product = state.data.find((item) => item.id === action.payload);
       if (product) {
         state.isCart.push(product);
+        if (!state.quantity[product.id]) {
+          state.quantity[product.id] = 1;
+        }
       }
     },
     removeFromCart: (state, action) => {
-      state.isCart = state.isCart?.filter((item) => item.id !== action.payload);
+      state.isCart = state.isCart.filter((item) => item.id !== action.payload);
+      delete state.quantity[action.payload];
     },
     setInput: (state, action) => {
       state.input = action.payload;
+    },
+    increaseQuantity: (state, action) => {
+      if (state.quantity[action.payload]) {
+        state.quantity[action.payload] += 1;
+      }
+    },
+    decreaseQuantity: (state, action) => {
+      if (
+        state.quantity[action.payload] &&
+        state.quantity[action.payload] > 1
+      ) {
+        state.quantity[action.payload] -= 1;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -49,6 +67,11 @@ const fetchProductSlice = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart, setInput } =
-  fetchProductSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  setInput,
+  increaseQuantity,
+  decreaseQuantity,
+} = fetchProductSlice.actions;
 export default fetchProductSlice.reducer;
