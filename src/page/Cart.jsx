@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { removeFromCart } from "../redux/slices/FetchProduct";
 import { MdDelete } from "react-icons/md";
 import toast from "react-hot-toast";
+import Portal from "../components/Portal";
 const Cart = () => {
   const { isCart } = useSelector((state) => state.fetchProduct);
   const dispatch = useDispatch();
@@ -57,13 +58,7 @@ const Cart = () => {
           </button>
         </div>
       )}
-      {isCart.length > 0 && (
-        <button className=" left-[40%] absolute mt-5 ">
-          <button className="border border-green-300 p-2 bg-green-300  ">
-            proceed to checkout
-          </button>
-        </button>
-      )}
+      {isCart.length > 0 && <Portal />}
     </div>
   );
 };
